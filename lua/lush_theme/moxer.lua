@@ -42,7 +42,7 @@
 --
 --  `:lua require('lush').ify()`
 
-local lush = require("lush")
+local lush = require "lush"
 local hsl = lush.hsl
 local c = {
 	ui = {
@@ -97,36 +97,36 @@ local theme = lush(function(injected_functions)
 		-- CurSearch      { }, -- Highlighting a search pattern under the cursor (see 'hlsearch')
 		-- lCursor        { }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
 		-- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
-		-- CursorColumn   { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
-		-- CursorLine     { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-		-- Directory      { }, -- Directory names (and other special names in listings)
+		CursorColumn { fg = c.base.red }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
+		CursorLine { bg = c.ui.shade1 }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
+		Directory { fg = c.base.violet }, -- Directory names (and other special names in listings)
 		-- DiffAdd        { }, -- Diff mode: Added line |diff.txt|
 		-- DiffChange     { }, -- Diff mode: Changed line |diff.txt|
-		-- DiffDelete     { }, -- Diff mode: Deleted line |diff.txt|
-		-- DiffText       { }, -- Diff mode: Changed text within a changed line |diff.txt|
+		DiffDelete { fg = c.base.red }, -- Diff mode: Deleted line |diff.txt|
+		DiffText { bg = c.base.blue, fg = c.base.white }, -- Diff mode: Changed text within a changed line |diff.txt|
 		-- EndOfBuffer    { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
 		-- TermCursor     { }, -- Cursor in a focused terminal
 		-- TermCursorNC   { }, -- Cursor in an unfocused terminal
-		-- ErrorMsg       { }, -- Error messages on the command line
+		ErrorMsg { fg = c.base.red }, -- Error messages on the command line
 		-- VertSplit      { }, -- Column separating vertically split windows
-		-- Folded         {fg = c.ui.foreground }, -- Line used for closed folds
+		Folded { fg = c.ui.foreground }, -- Line used for closed folds
 		-- FoldColumn     { fg = c.ui.shade4}, -- 'foldcolumn'
 		-- SignColumn     { }, -- Column where |signs| are displayed
 		-- IncSearch      { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
 		-- Substitute     { }, -- |:substitute| replacement text highlighting
-		LineNr({ fg = c.ui.shade2 }), -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+		LineNr { fg = c.ui.shade2 }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
 		-- LineNrAbove    { }, -- Line number for when the 'relativenumber' option is set, above the cursor line
 		-- LineNrBelow    { }, -- Line number for when the 'relativenumber' option is set, below the cursor line
-		CursorLineNr({ fg = c.base.orange }), -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+		CursorLineNr { fg = c.base.orange }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
 		-- CursorLineFold { }, -- Like FoldColumn when 'cursorline' is set for the cursor line
 		-- CursorLineSign { }, -- Like SignColumn when 'cursorline' is set for the cursor line
 		-- MatchParen     { }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-		-- ModeMsg        { }, -- 'showmode' message (e.g., "-- INSERT -- ")
+		ModeMsg { fg = c.base.white, bg = c.ui.shade4 }, -- 'showmode' message (e.g., "-- INSERT -- ")
 		-- MsgArea        { }, -- Area for messages and cmdline
-		-- MsgSeparator   { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
-		-- MoreMsg        { }, -- |more-prompt|
+		MsgSeparator { bg = c.base.paleblue, fg = c.ui.contrast }, -- Separator for scrolled messages, `msgsep` flag of 'display'
+		-- MoreMsg {}, -- |more-prompt|
 		-- NonText        { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-		Normal({ bg = c.ui.background, fg = hsl("#8e95b4") }), -- Normal text
+		Normal { bg = c.ui.background, fg = hsl "#8e95b4" }, -- Normal text
 		-- NormalFloat    { }, -- Normal text in floating windows.
 		-- FloatBorder    { }, -- Border of floating windows.
 		-- FloatTitle     { }, -- Title of floating windows.
@@ -134,31 +134,31 @@ local theme = lush(function(injected_functions)
 		-- Pmenu          { }, -- Popup menu: Normal item.
 		-- PmenuSel       { }, -- Popup menu: Selected item.
 		-- PmenuKind      { }, -- Popup menu: Normal item "kind"
-		-- PmenuKindSel   { }, -- Popup menu: Selected item "kind"
-		-- PmenuExtra     { }, -- Popup menu: Normal item "extra text"
-		-- PmenuExtraSel  { }, -- Popup menu: Selected item "extra text"
+		-- PmenuKindSel {}, -- Popup menu: Selected item "kind"
+		-- PmenuExtra {}, -- Popup menu: Normal item "extra text"
+		-- PmenuExtraSel {}, -- Popup menu: Selected item "extra text"
 		-- PmenuSbar      { }, -- Popup menu: Scrollbar.
 		-- PmenuThumb     { }, -- Popup menu: Thumb of the scrollbar.
-		-- Question       { }, -- |hit-enter| prompt and yes/no questions
-		-- QuickFixLine   { }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+		Question { fg = c.base.paleblue }, -- |hit-enter| prompt and yes/no questions
+		QuickFixLine {}, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 		-- Search         { }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
 		-- SpecialKey     { }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
 		-- SpellBad       { }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		-- SpellCap       { }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
 		-- SpellLocal     { }, -- Word that is recognized by the spellchecker as one that is used in another region. |spell| Combined with the highlighting used otherwise.
 		-- SpellRare      { }, -- Word that is recognized by the spellchecker as one that is hardly ever used. |spell| Combined with the highlighting used otherwise.
-		-- StatusLine     { }, -- Status line of current window
+		StatusLine { bg = c.ui.borders }, -- Status line of current window
 		-- StatusLineNC   { }, -- Status lines of not-current windows. Note: If this is equal to "StatusLine" Vim will use "^^^" in the status line of the current window.
-		TabLine({ fg = c.ui.shade3 }), -- Tab pages line, not active tab page label
+		TabLine { fg = c.ui.shade3 }, -- Tab pages line, not active tab page label
 		-- TabLineFill    { }, -- Tab pages line, where there are no labels
-		-- TabLineSel     { }, -- Tab pages line, active tab page label
+		TabLineSel { fg = c.ui.shade4 }, -- Tab pages line, active tab page label
 		-- Title          { }, -- Titles for output from ":set all", ":autocmd" etc.
 		-- Visual         { }, -- Visual mode selection
 		-- VisualNOS      { }, -- Visual mode selection when vim is "Not Owning the Selection".
-		-- WarningMsg     { }, -- Warning messages
+		WarningMsg { fg = c.base.yellow }, -- Warning messages
 		-- Whitespace     {fg = hsl("#090a0f")}, -- "nbsp", "space", "tab" and "trail" in 'listchars'
-		Winseparator({ fg = c.ui.background }), -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
-		-- WildMenu       { }, -- Current match in 'wildmenu' completion
+		Winseparator { fg = c.ui.background }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
+		-- WildMenu {}, -- Current match in 'wildmenu' completion
 		-- WinBar         { }, -- Window bar of current window
 		-- WinBarNC       { }, -- Window bar of not-current windows
 
@@ -170,48 +170,48 @@ local theme = lush(function(injected_functions)
 		--
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
-		Comment({ link = hsl("#3f445a") }), -- Any comment
+		Comment { link = hsl "#3f445a" }, -- Any comment
 
-		Constant({ fg = c.base.yellow }), -- (*) Any constant
-		String({ fg = c.base.green }), --   A string constant: "this is a string"
-		Character({ String }), --   A character constant: 'c', '\n'
-		Number({ fg = c.base.orange }), --   A number constant: 234, 0xff
-		Boolean({ fg = c.base.pink }), --   A boolean constant: TRUE, false
-		Float({ Number }), --   A floating point constant: 2.3e10
+		Constant { fg = c.base.yellow }, -- (*) Any constant
+		String { fg = c.base.green }, --   A string constant: "this is a string"
+		Character { String }, --   A character constant: 'c', '\n'
+		Number { fg = c.base.orange }, --   A number constant: 234, 0xff
+		Boolean { fg = c.base.pink }, --   A boolean constant: TRUE, false
+		Float { Number }, --   A floating point constant: 2.3e10
 
-		Identifier({ fg = c.ui.foreground }), -- (*) Any variable name
-		Function({ fg = c.base.yellow }), --   Function name (also: methods for classes)
+		Identifier { fg = c.ui.foreground }, -- (*) Any variable name
+		Function { fg = c.base.yellow }, --   Function name (also: methods for classes)
 
-		Statement({ fg = c.base.cyan }), -- (*) Any statement
-		Conditional({ fg = c.base.red }), --   if, then, else, endif, switch, etc.
-		Repeat({ fg = c.base.red }), --   for, do, while, etc.
-		Label({ fg = c.base.red }), --   case, default, etc.
-		Operator({ fg = c.base.red }), --   "sizeof", "+", "*", etc.
-		Keyword({ Statement }), --   any other keyword
-		Exception({ Label }), --   try, catch, throw
+		Statement { fg = c.base.red }, -- (*) Any statement
+		-- Conditional { fg = c.base.red }, --   if, then, else, endif, switch, etc.
+		-- Repeat { fg = c.base.red }, --   for, do, while, etc.
+		-- Label { fg = c.base.red }, --   case, default, etc.
+		Operator { fg = c.base.red }, --   "sizeof", "+", "*", etc.
+		Keyword { fg = c.base.cyan }, --   any other keyword
+		-- Exception { Label }, --   try, catch, throw
 
-		PreProc({ fg = c.base.red }), -- (*) Generic Preprocessor
-		Include({ fg = c.base.red }), --   Preprocessor #include
-		Define({ fg = c.base.red }), --   Preprocessor #define
+		PreProc { fg = c.base.red }, -- (*) Generic Preprocessor
+		Include { fg = c.base.red }, --   Preprocessor #include
+		Define { fg = c.base.red }, --   Preprocessor #define
 		-- Macro          { }, --   Same as Define
 		-- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
 
-		Type({ fg = c.base.pink }),
-		StorageClass({ fg = c.base.violet }), --   static, register, volatile, etc.
-		Structure({ fg = c.base.paleblue }), --   struct, union, enum, etc.
-		Typedef({ fg = c.base.pink }), --   A typedef
+		Type { fg = c.base.pink },
+		StorageClass { fg = c.base.violet }, --   static, register, volatile, etc.
+		Structure { fg = c.base.paleblue }, --   struct, union, enum, etc.
+		Typedef { fg = c.base.pink }, --   A typedef
 
-		Special({ fg = c.base.violet }), -- (*) Any special symbol
-		-- SpecialChar    { }, --   Special character in a constant
-		-- Tag            { }, --   You can use CTRL-] on this
-		Delimiter({ fg = c.base.red }), --   Character that needs attention
-		SpecialComment({ Identifier }), --   Special things inside a comment (e.g. '\n')
+		Special { fg = c.base.violet }, -- (*) Any special symbol
+		-- SpecialChar {}, --   Special character in a constant
+		Tag { fg = c.yellow }, --   You can use CTRL-] on this
+		Delimiter { fg = c.base.red }, --   Character that needs attention
+		-- SpecialComment { Identifier }, --   Special things inside a comment (e.g. '\n')
 		-- Debug          { }, --   Debugging statements
 
 		-- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
 		-- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-		-- Error          { }, -- Any erroneous construct
-		-- Todo           { }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+		Error { bg = c.base.red }, -- Any erroneous construct
+		Todo { bg = c.base.blue, fg = c.base.white }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
 		-- These groups are for the native LSP client and diagnostic system. Some
 		-- other LSP clients may use these groups, or use their own. Consult your
@@ -228,11 +228,11 @@ local theme = lush(function(injected_functions)
 
 		-- See :h diagnostic-highlights, some groups may not be listed, submit a PR fix to lush-template!
 		--
-		-- DiagnosticError            { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticWarn             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticInfo             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticHint             { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
-		-- DiagnosticOk               { } , -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticError { fg = c.base.red }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticWarn { fg = c.base.yellow }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticInfo { fg = c.base.paleblue }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticHint { fg = c.base.cyan }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
+		DiagnosticOk { fg = c.base.green }, -- Used as the base highlight group. Other Diagnostic highlights link to this by default (except Underline)
 		-- DiagnosticVirtualTextError { } , -- Used for "Error" diagnostic virtual text.
 		-- DiagnosticVirtualTextWarn  { } , -- Used for "Warn" diagnostic virtual text.
 		-- DiagnosticVirtualTextInfo  { } , -- Used for "Info" diagnostic virtual text.
@@ -277,21 +277,21 @@ local theme = lush(function(injected_functions)
 		-- sym"@text.uri"          { }, -- Underlined
 		-- sym"@text.underline"    { }, -- Underlined
 		-- sym"@text.todo"         { }, -- Todo
-		sym("@comment")({ Comment }), -- Comment
-		sym("@punctuation")({ fg = c.base.pink }), -- Delimiter
-		sym("@constant")({ Constant }), -- Constant
-		sym("@constant.builtin")({ fg = c.base.yellow }), -- Special
+		sym "@comment" { Comment }, -- Comment
+		sym "@punctuation" { fg = c.base.pink }, -- Delimiter
+		sym "@constant" { Constant }, -- Constant
+		sym "@constant.builtin" { fg = c.base.yellow }, -- Special
 		-- sym"@constant.macro"    { }, -- Define
-		-- sym"@define"            { }, -- Define
+		-- sym "@define" {}, -- Define
 		-- sym"@macro"             { }, -- Macro
-		sym("@string")({ fg = c.base.green }), -- String
-		sym("@string.content")({ fg = c.base.green }),
-		sym("@string.fragment")({ fg = c.base.green }),
+		sym "@string" { fg = c.base.green }, -- String
+		sym "@string.content" { fg = c.base.green },
+		sym "@string.fragment" { fg = c.base.green },
 		-- sym"@string.escape"     { }, -- SpecialChar
 		-- sym"@string.special"    { }, -- SpecialChar
-		sym("@character")({ Character }), -- Character
+		sym "@character" { Character }, -- Character
 		-- sym"@character.special" { }, -- SpecialChar
-		sym("@number")({ Number }), -- Number
+		sym "@number" { Number }, -- Number
 		-- sym"@boolean"           { }, -- Boolean
 		-- sym"@float"             { }, -- Float
 		-- sym"@function"          { }, -- Function
@@ -299,22 +299,22 @@ local theme = lush(function(injected_functions)
 		-- sym"@function.macro"    { }, -- Macro
 		-- sym"@parameter"         { }, -- Identifier
 		-- sym"@method"            { },-- Function
-		-- sym"@field"             { }, -- Identifier
+		-- sy"@field"             { }, -- Identifier
 		-- sym"@property"          { }, -- Identifier
 		-- sym"@constructor"       { }, -- Special
-		sym("@keyword")({ Keyword }), -- Keyword
-		sym("@keyword.conditional")({ Conditional }), -- Conditional
-		sym("@keyword.coroutine")({ Type }),
-		sym("@keyword.repeat")({ Conditional }), -- Repeat
+		sym "@keyword" { Keyword }, -- Keyword
+		sym "@keyword.conditional" { Statement }, -- Conditional
+		sym "@keyword.coroutine" { Type },
+		sym "@keyword.repeat" { Statement }, -- Repeat
 		-- sym"@label"             { }, -- Label
-		sym("@keyword.import")({ Conditional }),
-		sym("@keyword.operator")({ Operator }), -- Operator
-		sym("@keyword.return")({ Operator }), -- Operator
-		sym("@punctuation.delimiter")({}),
+		sym "@keyword.import" { Statement },
+		sym "@keyword.operator" { Statement }, -- Operator
+		sym "@keyword.return" { Statement }, -- Operator
+		sym "@punctuation.delimiter" {},
 		-- sym"@exception"         { }, -- Exception
-		sym("@variable")({ Identifier }), -- Identifier
-		sym("@variable.builtin")({ Operator }), -- Identifier
-		sym("@type")({ Type }), -- Type
+		sym "@variable" { Identifier }, -- Identifier
+		sym "@variable.builtin" { Statement }, -- Identifier
+		sym "@type" { Type }, -- Type
 		-- sym"@type.definition"   { }, -- Typedef
 		-- sym"@storageclass"      { }, -- StorageClass
 		-- sym"@structure"         { }, -- Structure
@@ -322,8 +322,11 @@ local theme = lush(function(injected_functions)
 		-- sym"@include"           { }, -- Include
 		-- sym"@preproc"           { }, -- PreProc
 		-- sym"@debug"             { }, -- Debug
-		-- sym"@tag"               { }, -- Tag
-		sym("@markup.quote")({ fg = c.base.pink }),
+		sym "@tag" { fg = c.base.yellow }, -- Tag
+		sym "@tag.delimiter" { fg = c.base.red },
+		sym "@tag.builtin" { fg = c.base.cyan }, -- Tag Builtin
+		sym "@tag.attribute" { fg = c.base.cyan },
+		-- sym "@markup.quote" { fg = c.base.pink },
 	}
 end)
 
