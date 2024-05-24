@@ -170,7 +170,7 @@ local theme = lush(function(injected_functions)
 		--
 		-- Uncomment and edit if you want more specific syntax highlighting.
 
-		Comment { link = hsl "#3f445a" }, -- Any comment
+		Comment { fg = c.ui.shade4 }, -- Any comment
 
 		Constant { fg = c.base.yellow }, -- (*) Any constant
 		String { fg = c.base.green }, --   A string constant: "this is a string"
@@ -203,14 +203,14 @@ local theme = lush(function(injected_functions)
 
 		Special { fg = c.base.violet }, -- (*) Any special symbol
 		-- SpecialChar {}, --   Special character in a constant
-		Tag { fg = c.yellow }, --   You can use CTRL-] on this
+		Tag { fg = c.base.yellow }, --   You can use CTRL-] on this
 		Delimiter { fg = c.base.red }, --   Character that needs attention
 		-- SpecialComment { Identifier }, --   Special things inside a comment (e.g. '\n')
 		-- Debug          { }, --   Debugging statements
 
-		-- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
+		Underlined { gui = "underline" }, -- Text that stands out, HTML links
 		-- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-		Error { bg = c.base.red }, -- Any erroneous construct
+		Error { bg = c.base.red, fg = c.base.white }, -- Any erroneous construct
 		Todo { bg = c.base.blue, fg = c.base.white }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
 		-- These groups are for the native LSP client and diagnostic system. Some
@@ -299,18 +299,18 @@ local theme = lush(function(injected_functions)
 		-- sym"@function.macro"    { }, -- Macro
 		-- sym"@parameter"         { }, -- Identifier
 		-- sym"@method"            { },-- Function
-		-- sy"@field"             { }, -- Identifier
+		-- sym"@field"             { }, -- Identifier
 		-- sym"@property"          { }, -- Identifier
 		-- sym"@constructor"       { }, -- Special
 		sym "@keyword" { Keyword }, -- Keyword
 		sym "@keyword.conditional" { Statement }, -- Conditional
 		sym "@keyword.coroutine" { Type },
 		sym "@keyword.repeat" { Statement }, -- Repeat
-		-- sym"@label"             { }, -- Label
+		-- ym"@label"             { }, -- Label
 		sym "@keyword.import" { Statement },
 		sym "@keyword.operator" { Statement }, -- Operator
 		sym "@keyword.return" { Statement }, -- Operator
-		sym "@punctuation.delimiter" {},
+		sym "@punctuation.delimiter" { Statement },
 		-- sym"@exception"         { }, -- Exception
 		sym "@variable" { Identifier }, -- Identifier
 		sym "@variable.builtin" { Statement }, -- Identifier
@@ -326,7 +326,6 @@ local theme = lush(function(injected_functions)
 		sym "@tag.delimiter" { fg = c.base.red },
 		sym "@tag.builtin" { fg = c.base.cyan }, -- Tag Builtin
 		sym "@tag.attribute" { fg = c.base.cyan },
-		-- sym "@markup.quote" { fg = c.base.pink },
 	}
 end)
 
